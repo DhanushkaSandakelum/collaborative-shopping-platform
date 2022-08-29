@@ -1,0 +1,2 @@
+### Test user service
+GET http://localhost:6000/api/user/test
