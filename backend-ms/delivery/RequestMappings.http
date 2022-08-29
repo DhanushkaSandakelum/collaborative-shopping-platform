@@ -1,0 +1,2 @@
+### Test delivery service
+GET http://localhost:6002/api/delivery/test

@@ -1,0 +1,2 @@
+### Test item service
+GET http://localhost:6001/api/item/test

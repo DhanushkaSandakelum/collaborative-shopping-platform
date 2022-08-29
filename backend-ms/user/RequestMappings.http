@@ -1,2 +1,26 @@
 ### Test user service
 GET http://localhost:6000/api/user/test
+
+### Register user
+POST http://localhost:6000/api/user/register
+Content-Type: application/json
+
+{
+  "username": "dhanushka117",
+  "firstName": "Dhanushka",
+  "lastName": "Sandakelum",
+  "phone": "0775642956",
+  "address": "131/C Kahatapitiya, Hanwella",
+  "userType": "seller",
+  "email": "dhanushkasandakelum711@gmail.com",
+  "password": "test123"
+}
+
+### Login user
+POST http://localhost:6000/api/user/login
+Content-Type: application/json
+
+{
+  "email": "dhanushkasandakelum711@gmail.com",
+  "password": "test123"
+}

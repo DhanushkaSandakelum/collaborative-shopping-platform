@@ -1,0 +1,2 @@
+### Test sms service
+GET http://localhost:8080/api/sms/test

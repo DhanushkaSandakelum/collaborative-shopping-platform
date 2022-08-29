@@ -1,0 +1,2 @@
+### Test payment service
+GET http://localhost:7002/api/payment/test

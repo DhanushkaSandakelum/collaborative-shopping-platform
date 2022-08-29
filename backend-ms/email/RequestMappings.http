@@ -1,0 +1,2 @@
+### Test email service
+GET http://localhost:7000/api/email/test

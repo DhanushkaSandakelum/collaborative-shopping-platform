@@ -13,6 +13,30 @@ spring:
           uri: lb://USER
           predicates:
             - Path=/api/user/**
+        - id: item
+          uri: lb://ITEM
+          predicates:
+            - Path=/api/item/**
+        - id: delivery
+          uri: lb://DELIVERY
+          predicates:
+            - Path=/api/delivery/**
+        - id: delivery
+          uri: lb://DELIVERY
+          predicates:
+            - Path=/api/delivery/**
+        - id: email
+          uri: lb://EMAIL
+          predicates:
+            - Path=/api/email/**
+        - id: sms
+          uri: lb://SMS
+          predicates:
+            - Path=/api/sms/**
+        - id: payment
+          uri: lb://PAYMENT
+          predicates:
+            - Path=/api/payment/**
 
 eureka:
   client:
