@@ -170,7 +170,7 @@ function Register() {
         (res) => {
           if (res.type === "OK") {
             toast.success(res.message);
-            navigate("/buyer");
+            navigate("/login");
           } else if (res.type === "BAD") {
             toast.error(res.message);
           }
@@ -325,11 +325,11 @@ function Register() {
                     <CButton
                       color="primary"
                       className="py-2"
+                      disabled={loading}
                       onClick={handleSubmit}
                     >
                       <div className="text-white">
-                        Login
-                        {loading && <CSpinner size="sm" />}
+                        Register {loading && <CSpinner size="sm" />}
                       </div>
                     </CButton>
                   </div>

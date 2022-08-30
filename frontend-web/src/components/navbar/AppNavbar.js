@@ -1,6 +1,7 @@
 import React from "react";
-
 import { NavLink } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import {
   CNavbar,
@@ -14,33 +15,63 @@ import {
   CButton,
 } from "@coreui/react";
 
-function AppNavbar() {
+import userService from "../../services/userService";
+
+function AppNavbar(props) {
+  let navigate = useNavigate();
+
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const user = userService.getUser();
+
+    if (user !== null) {
+      setIsUserLoggedIn(true);
+    }
+  });
+
+  const handleLogOut = () => {
+    userService.logout();
+
+    navigate("/login");
+  };
+
   return (
     <CNavbar colorScheme="light" className="bg-body">
       <CContainer fluid>
         <CNavbarBrand href="#">Shopping platform</CNavbarBrand>
-        <div>
-          <NavLink to="/register" style={{ textDecoration: "none" }}>
-            <CButton color="success" className="me-2">
-              Sign up
-            </CButton>
-          </NavLink>
-          <NavLink to="/login" style={{ textDecoration: "none" }}>
-            <CButton color="success">Login</CButton>
-          </NavLink>
-        </div>
-        <CDropdown alignment="end">
-          <CDropdownToggle color="secondary">Dhanushka117</CDropdownToggle>
-          <CDropdownMenu>
-            <NavLink to="/profile" style={{ textDecoration: "none" }}>
-              <CDropdownItem>Profile</CDropdownItem>
+        {!isUserLoggedIn ? (
+          <div>
+            <NavLink to="/register" style={{ textDecoration: "none" }}>
+              <CButton color="success" className="me-2">
+                Sign up
+              </CButton>
             </NavLink>
-            <CDropdownDivider />
-            <NavLink to="/logout" style={{ textDecoration: "none" }}>
-              <CDropdownItem>Logout</CDropdownItem>
+            <NavLink to="/login" style={{ textDecoration: "none" }}>
+              <CButton color="success">Login</CButton>
             </NavLink>
-          </CDropdownMenu>
-        </CDropdown>
+          </div>
+        ) : (
+          <CDropdown alignment="end">
+            <CDropdownToggle color="secondary">
+              {props.user.username}
+            </CDropdownToggle>
+            <CDropdownMenu>
+              <NavLink to="/profile" style={{ textDecoration: "none" }}>
+                <CDropdownItem>Profile</CDropdownItem>
+              </NavLink>
+              <CDropdownDivider />
+              {/* <NavLink to="/logout" style={{ textDecoration: "none" }}> */}
+              <CDropdownItem
+                onClick={handleLogOut}
+                style={{ cursor: "pointer" }}
+              >
+                Logout
+              </CDropdownItem>
+              {/* </NavLink> */}
+            </CDropdownMenu>
+          </CDropdown>
+        )}
       </CContainer>
     </CNavbar>
   );

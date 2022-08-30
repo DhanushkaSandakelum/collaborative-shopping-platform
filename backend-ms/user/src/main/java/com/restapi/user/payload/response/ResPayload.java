@@ -9,7 +9,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResMessage {
+public class ResPayload {
+    private Object payload;
     private String message;
     private ResType type;
 }

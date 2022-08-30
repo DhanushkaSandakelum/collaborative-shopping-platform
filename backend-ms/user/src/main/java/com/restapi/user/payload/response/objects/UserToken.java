@@ -1,4 +1,4 @@
-package com.restapi.user.payload.response;
+package com.restapi.user.payload.response.objects;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResMessage {
-    private String message;
-    private ResType type;
+public class UserToken {
+    private String username;
+    private String userType;
 }
