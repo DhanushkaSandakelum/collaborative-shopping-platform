@@ -8,6 +8,14 @@ spring:
       api-gateway
   cloud:
     gateway:
+      globalises:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
       routes:
         - id: user
           uri: lb://USER
