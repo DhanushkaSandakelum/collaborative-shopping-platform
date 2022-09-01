@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
 
+import { CContainer } from "@coreui/react";
+
 import AppNavbar from "../components/navbar/AppNavbar";
 import AppFooter from "../components/footer/AppFooter";
 
@@ -29,7 +31,7 @@ function MainLayout(props) {
         }));
       } else {
         toast.error("User token not found");
-        navigate("/");
+        // navigate("/");
       }
 
       console.log(user);
@@ -40,7 +42,9 @@ function MainLayout(props) {
     <div className="wrapper d-flex flex-column min-vh-100 bg-light">
       <AppNavbar user={user} />
       <ToastContainer autoClose={2000} />
-      <div className="body flex-grow-1 p-3">{props.page}</div>
+      <div className="body flex-grow-1 p-3">
+        <CContainer>{props.page}</CContainer>
+      </div>
       <AppFooter />
     </div>
   );

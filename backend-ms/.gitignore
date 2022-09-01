@@ -1,1 +1,10 @@
 .idea
+
+/eureka-server/target
+/api-gateway/target
+/user/target
+/item/target
+/delivery/target
+/email/target
+/sms/target
+/payment/target
