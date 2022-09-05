@@ -11,8 +11,20 @@ class itemService {
   }
 
   // Read
+  getItem = (itemId) => {
+    return axios.get(API_URL + "?itemId=" + itemId).then((res) => {
+      return res.data;
+    });
+  };
+
+  getItems = () => {
+    return axios.get(API_URL + "/all").then((res) => {
+      return res.data;
+    });
+  };
+
   getItemsByUserId = (userId) => {
-    return axios.get(API_URL + "/all?userId=" + userId).then((res) => {
+    return axios.get(API_URL + "/all/user?userId=" + userId).then((res) => {
       return res.data;
     });
   };

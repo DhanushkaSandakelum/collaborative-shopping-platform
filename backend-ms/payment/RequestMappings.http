@@ -1,2 +1,18 @@
 ### Test payment service
-GET http://localhost:7002/api/payment/test
+GET http://localhost:7003/api/payment/test
+
+### Create payment
+POST http://localhost:7003/api/payment
+Content-Type: application/json
+
+{
+  "userId": "1",
+  "itemId": "1",
+  "payment": "100"
+}
+
+### Get payment
+GET http://localhost:7003/api/payment?paymentId=1
+
+### Get all payments
+GET http://localhost:7003/api/payment/all

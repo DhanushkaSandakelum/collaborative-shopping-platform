@@ -12,12 +12,6 @@ import {
   CModalFooter,
   CForm,
   CFormInput,
-  CCard,
-  CCardBody,
-  CCardTitle,
-  CCardSubtitle,
-  CCardText,
-  CSpinner,
 } from "@coreui/react";
 import { toast } from "react-toastify";
 
@@ -29,40 +23,7 @@ import AppItemCard from "../../components/cards/AppItemCard";
 import itemService from "../../services/itemService";
 import userService from "../../services/userService";
 
-// const tempData = [
-//   {
-//     name: "asd",
-//     description: "fsdgdgdhh",
-//     amount: "10",
-//     price: "100.00",
-//   },
-//   {
-//     name: "asd",
-//     description: "fsdgdgdhh",
-//     amount: "10",
-//     price: "100.00",
-//   },
-//   {
-//     name: "asd",
-//     description: "fsdgdgdhh",
-//     amount: "10",
-//     price: "100.00",
-//   },
-//   {
-//     name: "asd",
-//     description: "fsdgdgdhh",
-//     amount: "10",
-//     price: "100.00",
-//   },
-//   {
-//     name: "asd",
-//     description: "fsdgdgdhh",
-//     amount: "10",
-//     price: "100.00",
-//   },
-// ];
-
-function Dashboard() {
+function SellerDashboard() {
   // Collection list
   const [collection, setCollection] = useState([]);
 
@@ -86,13 +47,13 @@ function Dashboard() {
     itemService.getItemsByUserId(user.id).then(
       (res) => {
         if (res.type === "OK") {
-          toast.success(res.message);
+          // toast.success(res.message);
 
           // Settings table data from fetched data
           setCollection(res.payload);
           console.log(res.payload);
         } else if (res.type === "BAD") {
-          toast.error(res.message);
+          // toast.error(res.message);
         }
 
         setLoading(false);
@@ -217,6 +178,8 @@ function Dashboard() {
 
   return (
     <div>
+      <h3 className="display-6">Seller Dashboard</h3>
+      <br />
       <CRow>
         <CCol>
           <CButton color="success" onClick={() => setVisible(!visible)}>
@@ -318,4 +281,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default SellerDashboard;

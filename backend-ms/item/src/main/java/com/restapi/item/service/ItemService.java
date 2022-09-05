@@ -5,6 +5,7 @@ import com.restapi.item.payload.request.ReqItem;
 import com.restapi.item.payload.response.ResPayload;
 import com.restapi.item.payload.response.ResType;
 import com.restapi.item.payload.response.objects.DetailedItem;
+import com.restapi.item.payload.response.objects.ItemDetails;
 import com.restapi.item.payload.response.objects.UserDetails;
 import com.restapi.item.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ public class ItemService {
                 reqItem.getDescription(),
                 reqItem.getAmount(),
                 reqItem.getPrice(),
+                false,
                 reqItem.getUserId()
         );
 
@@ -44,7 +46,7 @@ public class ItemService {
 
         if(item != null){
             // Communicate with user Service and take data
-            UserDetails userDetails = restTemplate.getForObject("http://localhost:6001/api/user?userId="+item.getUserId(), UserDetails.class);
+            UserDetails userDetails = restTemplate.getForObject("http://localhost:6001/api/user/support?userId="+item.getUserId(), UserDetails.class);
 
             if(userDetails != null) {
                 DetailedItem detailedItem = new DetailedItem(
@@ -53,6 +55,7 @@ public class ItemService {
                         item.getDescription(),
                         item.getAmount(),
                         item.getPrice(),
+                        item.getAlreadyBuy(),
                         item.getUserId(),
                         userDetails.getUsername(),
                         userDetails.getFirstName(),
@@ -69,12 +72,45 @@ public class ItemService {
         }
     }
 
+    public ResponseEntity<?> getItems(){
+        List<Item> items = itemRepository.findAll();
+
+        if(!items.isEmpty()) {
+
+            List<DetailedItem> detailedItems = new ArrayList<>();
+
+            items.forEach(item -> {
+                // Communicate with user Service and take data
+                UserDetails userDetails = restTemplate.getForObject("http://localhost:6001/api/user/support?userId="+item.getUserId(), UserDetails.class);
+
+                DetailedItem detailedItem = new DetailedItem(
+                        item.getId(),
+                        item.getName(),
+                        item.getDescription(),
+                        item.getAmount(),
+                        item.getPrice(),
+                        item.getAlreadyBuy(),
+                        item.getUserId(),
+                        userDetails.getUsername(),
+                        userDetails.getFirstName(),
+                        userDetails.getLastName()
+                );
+
+                detailedItems.add(detailedItem);
+            });
+
+            return ResponseEntity.ok(new ResPayload(detailedItems, "Items found", ResType.OK));
+        } else  {
+            return ResponseEntity.ok(new ResPayload("Items not found", ResType.BAD));
+        }
+    }
+
     public ResponseEntity<?> getItemsByUserId(Integer userId){
         List<Item> items = itemRepository.findItemsByUserId(userId);
 
         if(!items.isEmpty()) {
             // Communicate with user Service and take data
-            UserDetails userDetails = restTemplate.getForObject("http://localhost:6001/api/user?userId="+userId, UserDetails.class);
+            UserDetails userDetails = restTemplate.getForObject("http://localhost:6001/api/user/support?userId="+userId, UserDetails.class);
 
             List<DetailedItem> detailedItems = new ArrayList<>();
 
@@ -85,6 +121,7 @@ public class ItemService {
                         item.getDescription(),
                         item.getAmount(),
                         item.getPrice(),
+                        item.getAlreadyBuy(),
                         item.getUserId(),
                         userDetails.getUsername(),
                         userDetails.getFirstName(),
@@ -112,6 +149,27 @@ public class ItemService {
             itemRepository.save(item);
 
             return ResponseEntity.ok(new ResPayload(item, "Item updated successfully", ResType.OK));
+        } else {
+            return ResponseEntity.ok(new ResPayload("Items not found", ResType.BAD));
+        }
+    }
+
+    public ResponseEntity<?> buyItem(Integer itemId){
+        Item item = itemRepository.findItemById(itemId);
+
+        if(item != null) {
+            item.setAlreadyBuy(true);
+
+            itemRepository.save(item);
+
+            ItemDetails itemDetails = new ItemDetails(
+                    item.getName(),
+                    item.getAmount(),
+                    item.getPrice(),
+                    item.getAlreadyBuy()
+            );
+
+            return ResponseEntity.ok(new ResPayload(itemDetails, "Item Buy successfully", ResType.OK));
         } else {
             return ResponseEntity.ok(new ResPayload("Items not found", ResType.BAD));
         }

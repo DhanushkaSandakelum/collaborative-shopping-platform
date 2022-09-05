@@ -16,8 +16,11 @@ Content-Type: application/json
 ### Get item
 GET http://localhost:6002/api/item?itemId=1
 
+### Get all items
+GET http://localhost:6002/api/item/all
+
 ### Get all items by user id
-GET http://localhost:6002/api/item/all?userId=1
+GET http://localhost:6002/api/item/all/user?userId=1
 
 ### Update Item
 PUT http://localhost:6002/api/item?itemId=1
@@ -31,5 +34,12 @@ Content-Type: application/json
   "userId": "2"
 }
 
+### Buy item
+GET http://localhost:6002/api/item/buy?itemId=1
+
 ### Delete item
 DELETE http://localhost:6002/api/item?itemId=1
+
+### Microservice Support
+### Get item details
+GET http://localhost:6002/api/item/support?itemId=1

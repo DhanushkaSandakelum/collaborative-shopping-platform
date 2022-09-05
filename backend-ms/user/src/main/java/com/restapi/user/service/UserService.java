@@ -61,20 +61,4 @@ public class UserService {
 
         return ResponseEntity.ok(new ResPayload(userToken, "Login successful", ResType.OK));
     }
-
-    public UserDetails getUserDetailsById(Integer userId){
-        User user = userRepository.findUserById(userId);
-
-        if(user != null) {
-            UserDetails userDetails = new UserDetails(
-                    user.getUsername(),
-                    user.getFirstName(),
-                    user.getLastName()
-            );
-
-            return userDetails;
-        } else {
-            return null;
-        }
-    }
 }

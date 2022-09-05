@@ -20,14 +20,16 @@ public class Item {
     private String description;
     private Integer amount;
     private Integer price;
+    private Boolean alreadyBuy;
 
     private Integer userId;
 
-    public Item(String name, String description, Integer amount, Integer price, Integer userId) {
+    public Item(String name, String description, Integer amount, Integer price, Boolean alreadyBuy, Integer userId) {
         this.name = name;
         this.description = description;
         this.amount = amount;
         this.price = price;
+        this.alreadyBuy = alreadyBuy;
         this.userId = userId;
     }
 }

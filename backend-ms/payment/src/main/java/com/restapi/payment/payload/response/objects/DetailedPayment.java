@@ -1,4 +1,4 @@
-package com.restapi.item.payload.response.objects;
+package com.restapi.payment.payload.response.objects;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,13 +9,14 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DetailedItem {
+public class DetailedPayment {
     private Integer id;
+    private Integer payment;
+
+    private Integer itemId;
     private String name;
-    private String description;
     private Integer amount;
     private Integer price;
-    private Boolean alreadyBuy;
 
     private Integer userId;
     private String username;

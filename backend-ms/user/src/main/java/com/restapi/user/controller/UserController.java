@@ -29,9 +29,4 @@ public class UserController {
     public ResponseEntity<?> login(@RequestBody ReqUserLogin reqUserLogin) {
         return userService.login(reqUserLogin);
     }
-
-    @GetMapping("")
-    public UserDetails getUserDetailsById(@RequestParam(name = "userId") Integer userId) {
-        return userService.getUserDetailsById(userId);
-    }
 }

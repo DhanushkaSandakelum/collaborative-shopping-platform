@@ -28,7 +28,7 @@ function AppNavbar(props) {
     if (user !== null) {
       setIsUserLoggedIn(true);
     }
-  });
+  }, []);
 
   const handleLogOut = () => {
     userService.logout();
@@ -39,7 +39,9 @@ function AppNavbar(props) {
   return (
     <CNavbar colorScheme="light" className="bg-body">
       <CContainer fluid>
-        <CNavbarBrand href="#">Shopping platform</CNavbarBrand>
+        <NavLink to="/" style={{ textDecoration: "none" }}>
+          <CNavbarBrand>Shopping platform</CNavbarBrand>
+        </NavLink>
         {!isUserLoggedIn ? (
           <div>
             <NavLink to="/register" style={{ textDecoration: "none" }}>
@@ -57,8 +59,11 @@ function AppNavbar(props) {
               {props.user.username}
             </CDropdownToggle>
             <CDropdownMenu>
-              <NavLink to="/profile" style={{ textDecoration: "none" }}>
-                <CDropdownItem>Profile</CDropdownItem>
+              <NavLink
+                to={`/${props.user.userType}`}
+                style={{ textDecoration: "none" }}
+              >
+                <CDropdownItem>Dashboard</CDropdownItem>
               </NavLink>
               <CDropdownDivider />
               {/* <NavLink to="/logout" style={{ textDecoration: "none" }}> */}
