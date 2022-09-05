@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   CRow,
@@ -26,42 +26,45 @@ import { v_required } from "../../utils/validator";
 import AppDataFetchLoader from "../../components/loaders/AppDataFetchLoader";
 import AppItemCard from "../../components/cards/AppItemCard";
 
-const tempData = [
-  {
-    name: "asd",
-    description: "fsdgdgdhh",
-    amount: "10",
-    price: "100.00",
-  },
-  {
-    name: "asd",
-    description: "fsdgdgdhh",
-    amount: "10",
-    price: "100.00",
-  },
-  {
-    name: "asd",
-    description: "fsdgdgdhh",
-    amount: "10",
-    price: "100.00",
-  },
-  {
-    name: "asd",
-    description: "fsdgdgdhh",
-    amount: "10",
-    price: "100.00",
-  },
-  {
-    name: "asd",
-    description: "fsdgdgdhh",
-    amount: "10",
-    price: "100.00",
-  },
-];
+import itemService from "../../services/itemService";
+import userService from "../../services/userService";
+
+// const tempData = [
+//   {
+//     name: "asd",
+//     description: "fsdgdgdhh",
+//     amount: "10",
+//     price: "100.00",
+//   },
+//   {
+//     name: "asd",
+//     description: "fsdgdgdhh",
+//     amount: "10",
+//     price: "100.00",
+//   },
+//   {
+//     name: "asd",
+//     description: "fsdgdgdhh",
+//     amount: "10",
+//     price: "100.00",
+//   },
+//   {
+//     name: "asd",
+//     description: "fsdgdgdhh",
+//     amount: "10",
+//     price: "100.00",
+//   },
+//   {
+//     name: "asd",
+//     description: "fsdgdgdhh",
+//     amount: "10",
+//     price: "100.00",
+//   },
+// ];
 
 function Dashboard() {
   // Collection list
-  const [collection, setCollection] = useState(tempData);
+  const [collection, setCollection] = useState([]);
 
   // Modal visibility
   const [visible, setVisible] = useState(false);
@@ -69,6 +72,45 @@ function Dashboard() {
   // For the server side requests and responses
   const [loading, setLoading] = useState(false);
   let navigate = useNavigate();
+
+  const [user, setUser] = useState(userService.getUser());
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = () => {
+    console.log("called");
+    setLoading(true);
+
+    itemService.getItemsByUserId(user.id).then(
+      (res) => {
+        if (res.type === "OK") {
+          toast.success(res.message);
+
+          // Settings table data from fetched data
+          setCollection(res.payload);
+          console.log(res.payload);
+        } else if (res.type === "BAD") {
+          toast.error(res.message);
+        }
+
+        setLoading(false);
+      },
+      (error) => {
+        const res =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+
+        // After recieving the server request
+        toast.error(res);
+        setLoading(false);
+      }
+    );
+  };
 
   // Form data
   const [addItemForm, setAddItemForm] = useState({
@@ -139,37 +181,37 @@ function Dashboard() {
         description: addItemForm.description,
         amount: addItemForm.amount,
         price: addItemForm.price,
+        userId: user.id,
       };
 
       // for testing only
-      setCollection((prev) => [...prev, payload]);
+      // setCollection((prev) => [...prev, payload]);
       setVisible(false);
-      toast.success("Item");
 
-      // userService.login(payload).then(
-      //   (res) => {
-      //     if (res.type === "OK") {
-      //       toast.success(res.message);
-      //       navigate("/buyer");
-      //     } else if (res.type === "BAD") {
-      //       toast.error(res.message);
-      //     }
+      itemService.createItem(payload).then(
+        (res) => {
+          if (res.type === "OK") {
+            toast.success(res.message);
+            fetchData();
+          } else if (res.type === "BAD") {
+            toast.error(res.message);
+          }
 
-      //     setLoading(false);
-      //   },
-      //   (error) => {
-      //     const res =
-      //       (error.response &&
-      //         error.response.data &&
-      //         error.response.data.message) ||
-      //       error.message ||
-      //       error.toString();
+          setLoading(false);
+        },
+        (error) => {
+          const res =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
 
-      //     // After recieving the server request
-      //     toast.error(res);
-      //     setLoading(false);
-      //   }
-      // );
+          // After recieving the server request
+          toast.error(res);
+          setLoading(false);
+        }
+      );
     }
   };
 
@@ -253,16 +295,21 @@ function Dashboard() {
       <br />
       {/* Data fetch loading */}
       <AppDataFetchLoader loading={loading} />
+      {collection.length === 0 && (
+        <h3 className="text-center">Your item collection is empty !</h3>
+      )}
 
       <div>
         <CRow className="g-3">
           {/* Item cards */}
           {collection.map((item) => (
             <AppItemCard
+              id={item.id}
               name={item.name}
               description={item.description}
               amount={item.amount}
               price={item.price}
+              fetchData={fetchData}
             />
           ))}
         </CRow>

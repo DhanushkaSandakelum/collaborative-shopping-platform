@@ -6,6 +6,7 @@ import com.restapi.user.payload.request.ReqUserRegister;
 import com.restapi.user.payload.response.ResMessage;
 import com.restapi.user.payload.response.ResPayload;
 import com.restapi.user.payload.response.ResType;
+import com.restapi.user.payload.response.objects.UserDetails;
 import com.restapi.user.payload.response.objects.UserToken;
 import com.restapi.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,8 +57,24 @@ public class UserService {
         if(!encoder.matches(reqUserLogin.getPassword(), user.getPassword()))
             return ResponseEntity.ok(new ResMessage("Incorrect password", ResType.BAD));
 
-        UserToken userToken = new UserToken(user.getUsername(), user.getUserType());
+        UserToken userToken = new UserToken(user.getId(), user.getUsername(), user.getUserType());
 
         return ResponseEntity.ok(new ResPayload(userToken, "Login successful", ResType.OK));
+    }
+
+    public UserDetails getUserDetailsById(Integer userId){
+        User user = userRepository.findUserById(userId);
+
+        if(user != null) {
+            UserDetails userDetails = new UserDetails(
+                    user.getUsername(),
+                    user.getFirstName(),
+                    user.getLastName()
+            );
+
+            return userDetails;
+        } else {
+            return null;
+        }
     }
 }

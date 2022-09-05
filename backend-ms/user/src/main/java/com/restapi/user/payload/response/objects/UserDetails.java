@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserToken {
-    private Integer id;
+public class UserDetails {
     private String username;
-    private String userType;
+    private String firstName;
+    private String lastName;
 }

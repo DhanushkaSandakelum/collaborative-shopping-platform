@@ -1,4 +1,4 @@
-package com.restapi.user.payload.response;
+package com.restapi.item.payload.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
