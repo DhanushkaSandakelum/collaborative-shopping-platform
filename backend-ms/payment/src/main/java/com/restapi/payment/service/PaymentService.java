@@ -4,6 +4,7 @@ import com.restapi.payment.model.Payment;
 import com.restapi.payment.payload.request.ReqPayment;
 import com.restapi.payment.payload.response.ResPayload;
 import com.restapi.payment.payload.response.ResType;
+import com.restapi.payment.payload.response.objects.DeliveryDetails;
 import com.restapi.payment.payload.response.objects.DetailedPayment;
 import com.restapi.payment.payload.response.objects.ItemDetails;
 import com.restapi.payment.payload.response.objects.UserDetails;
@@ -25,10 +26,11 @@ public class PaymentService {
     private RestTemplate restTemplate;
 
     public ResponseEntity<?> createPayment(ReqPayment reqPayment) {
-// Communicate with item Service and take data
-        ItemDetails itemDetails = restTemplate.getForObject("http://localhost:6002/api/item/buy?itemId="+reqPayment.getItemId(), ItemDetails.class);
+        // Communicate with item Service and take data
+        ItemDetails itemDetails = restTemplate.getForObject("http://localhost:6002/api/item/support?itemId="+reqPayment.getItemId(), ItemDetails.class);
 
         if(itemDetails != null) {
+            // SAVE PAYMENT
             Payment payment = new Payment(
                     reqPayment.getUserId(),
                     reqPayment.getItemId(),
@@ -36,6 +38,20 @@ public class PaymentService {
             );
 
             paymentRepository.save(payment);
+
+            // BUY ITEM
+            // Communicate with item Service and post data
+            ResPayload resPayload1 = restTemplate.getForObject("http://localhost:6002/api/item/buy?itemId="+reqPayment.getItemId(), ResPayload.class);
+
+            // DELIVERY
+            DeliveryDetails deliveryDetails = new DeliveryDetails(
+                    itemDetails.getUserId(),
+                    reqPayment.getUserId(),
+                    reqPayment.getItemId()
+            );
+
+            // Communicate with delivery Service and post data
+            ResPayload resPayload2 = restTemplate.postForObject("http://localhost:6003/api/delivery", deliveryDetails, ResPayload.class);
 
             return ResponseEntity.ok(new ResPayload( "Payment saved successfully", ResType.OK));
         } else {

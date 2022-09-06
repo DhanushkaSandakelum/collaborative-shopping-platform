@@ -1,2 +1,18 @@
 ### Test delivery service
-GET http://localhost:6002/api/delivery/test
+GET http://localhost:6003/api/delivery/test
+
+### Create delivery
+POST http://localhost:6003/api/delivery
+Content-Type: application/json
+
+{
+  "sellerId": "1",
+  "buyerId": "2",
+  "itemId": "1"
+}
+
+### Get delivery
+GET http://localhost:6003/api/delivery?deliveryId=1
+
+### Get all deliveries
+GET http://localhost:6003/api/delivery/all

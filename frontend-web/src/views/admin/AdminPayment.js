@@ -1,16 +1,23 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { CRow, CCol, CButton } from "@coreui/react";
+import { useNavigate, NavLink } from "react-router-dom";
+import {
+  CTable,
+  CTableHead,
+  CTableRow,
+  CTableHeaderCell,
+  CTableBody,
+  CTableDataCell,
+  CButtonGroup,
+  CButton,
+} from "@coreui/react";
 import { toast } from "react-toastify";
 
 import AppDataFetchLoader from "../../components/loaders/AppDataFetchLoader";
-import AppItemCard from "../../components/cards/AppItemCard";
 
-import itemService from "../../services/itemService";
-// import userService from "../../services/userService";
+import paymentService from "../../services/paymentService";
 
-function BuyerDashboard() {
+function AdminPayment() {
   // Collection list
   const [collection, setCollection] = useState([]);
 
@@ -31,7 +38,7 @@ function BuyerDashboard() {
     console.log("called");
     setLoading(true);
 
-    itemService.getItems().then(
+    paymentService.getPayments().then(
       (res) => {
         if (res.type === "OK") {
           toast.success(res.message);
@@ -62,40 +69,37 @@ function BuyerDashboard() {
 
   return (
     <div>
-      <h3 className="display-6">Buyer Dashboard</h3>
-      <br />
-      <CRow>
-        <CCol>
-          <CButton color="success" onClick={() => setVisible(!visible)}>
-            My Item Collection
-          </CButton>
-        </CCol>
-      </CRow>
+      <h4>Payments</h4>
 
       <br />
       {/* Data fetch loading */}
       <AppDataFetchLoader loading={loading} />
       {collection.length === 0 && (
-        <h3 className="text-center">Your item collection is empty !</h3>
+        <h3 className="text-center">Deliveries are empty</h3>
       )}
 
-      <div>
-        <CRow className="g-3">
-          {/* Item cards */}
+      <CTable>
+        <CTableHead>
+          <CTableRow>
+            <CTableHeaderCell scope="col">ID</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Username</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Item name</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Payment</CTableHeaderCell>
+          </CTableRow>
+        </CTableHead>
+        <CTableBody>
           {collection.map((item) => (
-            <AppItemCard
-              id={item.id}
-              name={item.name}
-              description={item.description}
-              amount={item.amount}
-              price={item.price}
-              fetchData={fetchData}
-            />
+            <CTableRow>
+              <CTableHeaderCell scope="row">{item.id}</CTableHeaderCell>
+              <CTableDataCell>{item.username}</CTableDataCell>
+              <CTableDataCell>{item.name}</CTableDataCell>
+              <CTableDataCell>{item.payment}</CTableDataCell>
+            </CTableRow>
           ))}
-        </CRow>
-      </div>
+        </CTableBody>
+      </CTable>
     </div>
   );
 }
 
-export default BuyerDashboard;
+export default AdminPayment;

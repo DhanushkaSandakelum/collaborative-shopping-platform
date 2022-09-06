@@ -19,7 +19,8 @@ public class SupportService {
                     item.getName(),
                     item.getAmount(),
                     item.getPrice(),
-                    item.getAlreadyBuy()
+                    item.getAlreadyBuy(),
+                    item.getUserId()
             );
 
             return itemDetails;

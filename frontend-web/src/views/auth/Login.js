@@ -1,6 +1,6 @@
 import React from "react";
 import image from "../../images/signin.png";
-import "../../styles/signin.css";
+// import "../../styles/signin.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 

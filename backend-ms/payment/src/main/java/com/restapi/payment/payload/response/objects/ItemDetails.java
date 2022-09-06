@@ -11,4 +11,6 @@ public class ItemDetails {
     private String name;
     private Integer amount;
     private Integer price;
+    private Boolean alreadyBuy;
+    private Integer userId;
 }

@@ -1,4 +1,4 @@
-package com.restapi.item.payload.response.objects;
+package com.restapi.delivery.payload.response.objects;
 
 import lombok.*;
 

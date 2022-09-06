@@ -7,6 +7,7 @@ import Home from "./views/public/Home";
 import Login from "./views/auth/Login";
 import Register from "./views/auth/Register";
 
+import AdminDashboard from "./views/admin/AdminDashboard";
 import BuyerDashboard from "./views/buyer/BuyerDashboard";
 import SellerDashboard from "./views/seller/SellerDashboard";
 
@@ -19,8 +20,10 @@ function App() {
       <Routes>
         <Route path="*" element={<MainLayout page={<Home />} />} />
         <Route exact path="/" element={<MainLayout page={<Home />} />} />
+        <Route exact path="/admin" element={<MainLayout page={<AdminDashboard />} />} />
         <Route exact path="/buyer" element={<MainLayout page={<BuyerDashboard />} />} />
         <Route exact path="/seller" element={<MainLayout page={<SellerDashboard />} />} />
+
         <Route exact path="/item" element={<MainLayout page={<Item />} />} />
         <Route exact path="/item/payment" element={<MainLayout page={<Payment />} />} />
 

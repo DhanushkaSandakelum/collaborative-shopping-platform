@@ -166,7 +166,8 @@ public class ItemService {
                     item.getName(),
                     item.getAmount(),
                     item.getPrice(),
-                    item.getAlreadyBuy()
+                    item.getAlreadyBuy(),
+                    item.getUserId()
             );
 
             return ResponseEntity.ok(new ResPayload(itemDetails, "Item Buy successfully", ResType.OK));

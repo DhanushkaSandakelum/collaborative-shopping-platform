@@ -9,6 +9,13 @@ class itemService {
       return response.data;
     });
   }
+
+  // Read
+  getPayments = () => {
+    return axios.get(API_URL + "/all").then((res) => {
+      return res.data;
+    });
+  };
 }
 
 export default new itemService();

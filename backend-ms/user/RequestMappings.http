@@ -1,7 +1,7 @@
 ### Test user service
 GET http://localhost:6001/api/user/test
 
-### Register user
+### Register user as seller
 POST http://localhost:6001/api/user/register
 Content-Type: application/json
 
@@ -13,6 +13,21 @@ Content-Type: application/json
   "address": "131/C Kahatapitiya, Hanwella",
   "userType": "seller",
   "email": "dhanushkasandakelum711@gmail.com",
+  "password": "test123"
+}
+
+### Register user as buyer
+POST http://localhost:6001/api/user/register
+Content-Type: application/json
+
+{
+  "username": "janindu117",
+  "firstName": "Janindu",
+  "lastName": "Sandakelum",
+  "phone": "0775642956",
+  "address": "131/C Kahatapitiya, Hanwella",
+  "userType": "buyer",
+  "email": "janindusandakelum@gmail.com",
   "password": "test123"
 }
 
