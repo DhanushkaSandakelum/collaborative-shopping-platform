@@ -1,2 +1,12 @@
 ### Test email service
-GET http://localhost:7000/api/email/test
+GET http://localhost:7001/api/email/test
+
+### Send mail
+POST http://localhost:7001/api/email
+Content-Type: application/json
+
+{
+  "recipient": "dhanushkasandakelum711@gmail.com",
+  "msgBody": "Good email",
+  "subject": "Email service test"
+}

@@ -6,6 +6,17 @@ spring:
   application:
     name:
       email
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ucscgroupproject@gmail.com
+    password: okypfwaqistmyxwb
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   datasource:
     url: jdbc:mysql://localhost:3306/csp_email_db
     username: root
