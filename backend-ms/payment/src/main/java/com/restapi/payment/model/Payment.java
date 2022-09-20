@@ -7,13 +7,14 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "payment")
+@Table(name = "payment", schema = "public")
 @Getter
 @Setter
 @NoArgsConstructor
 public class Payment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "payment_id_sequence", sequenceName = "payment_id_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "payment_id_sequence")
     private Integer id;
 
     private Integer userId;

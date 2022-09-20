@@ -1,15 +1,13 @@
 package com.restapi.email.payload.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmailRequest {
+@ToString
+public class ReqEmail {
     private String recipient;
     private String msgBody;
     private String subject;

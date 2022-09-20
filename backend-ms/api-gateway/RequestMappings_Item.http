@@ -1,2 +1,0 @@
-### Test item service
-GET http://localhost:8080/api/item/test

@@ -7,13 +7,14 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "delivery")
+@Table(name = "delivery", schema = "public")
 @Getter
 @Setter
 @NoArgsConstructor
 public class Delivery {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "delivery_id_sequence", sequenceName = "delivery_id_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "delivery_id_sequence")
     private Integer id;
 
     private Integer sellerId;

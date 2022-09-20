@@ -1,38 +1,41 @@
 package com.restapi.email.service;
 
-import com.restapi.email.payload.request.EmailRequest;
+import com.restapi.email.payload.request.ReqEmail;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import javax.mail.internet.MimeMessage;
 
 @Service
 public class EmailService {
+    @Autowired
     private JavaMailSender javaMailSender;
     private String sender = "ucscgroupproject@gmail.com";
 
-    public String sendSimpleMail(EmailRequest details) {
-        try{
-            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-            MimeMessageHelper mimeMessageHelper;
+    public String sendSimpleMail(ReqEmail details) {
+        System.out.println(details);
+        // Try block to check for exceptions
+        try {
 
-            // Setting multipart as true for sen attachments with email
-            mimeMessageHelper = new MimeMessageHelper(mimeMessage);
+            // Creating a simple mail message
+            SimpleMailMessage mailMessage
+                    = new SimpleMailMessage();
 
-            mimeMessageHelper.setFrom(sender);
-            mimeMessageHelper.setTo(details.getRecipient());
+            // Setting up necessary details
+            mailMessage.setFrom(sender);
+            mailMessage.setTo(details.getRecipient());
+            mailMessage.setText(details.getMsgBody());
+            mailMessage.setSubject(details.getSubject());
 
-            String mailBody = "";
-            mailBody += details.getMsgBody();
+            // Sending the mail
+            javaMailSender.send(mailMessage);
+            return "Mail Sent Successfully...";
+        }
 
-            mimeMessageHelper.setText(mailBody, true);
-            mimeMessageHelper.setSubject(details.getSubject());
-
-            javaMailSender.send(mimeMessage);
-            return "Mail send successfully";
-        } catch (Exception e){
-            return "Error while sending mail";
+        // Catch block to handle the exceptions
+        catch (Exception e) {
+            return "Error while Sending Mail";
         }
     }
 

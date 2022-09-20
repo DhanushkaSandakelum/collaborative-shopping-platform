@@ -1,6 +1,8 @@
 package com.restapi.email.controller;
 
-import com.restapi.email.payload.request.EmailRequest;
+import com.restapi.email.payload.request.ReqEmail;
+import com.restapi.email.payload.response.ResPayload;
+import com.restapi.email.payload.response.ResType;
 import com.restapi.email.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +21,9 @@ public class EmailController {
     }
 
     @PostMapping("")
-    public String sendMail(@RequestBody EmailRequest details){
+    public ResponseEntity<?> sendMail(@RequestBody ReqEmail details){
         String status = emailService.sendSimpleMail(details);
 
-        return status;
+        return ResponseEntity.ok(new ResPayload(status, ResType.OK));
     }
 }

@@ -6,12 +6,12 @@ function AppFooter() {
   return (
     <CFooter>
       <div>
-        <CLink href="https://coreui.io">CoreUI</CLink>
-        <span>&copy; 2021 creativeLabs.</span>
+        <CLink href="https://coreui.io">Middleware Assignment</CLink>
+        <span>&copy; 2022 UCSC</span>
       </div>
       <div>
-        <span>Powered by</span>
-        <CLink href="https://coreui.io">CoreUI</CLink>
+        <span>Powered by </span>
+        <CLink href="https://coreui.io">React & Spring boot</CLink>
       </div>
     </CFooter>
   );

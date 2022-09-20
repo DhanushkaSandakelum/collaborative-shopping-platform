@@ -1,0 +1,127 @@
+services:
+  postgres:
+    container_name: postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+#  mysqldb:
+#    image: mysql:latest
+#    container_name: mysqldb
+#    environment:
+#      - MYSQL_ROOT_PASSWORD=root
+#      - MYSQL_USER=root
+#      - MYSQL_PASSWORD=root
+#    ports:
+#      - "3307:3306"
+#    restart: always
+
+  user:
+    image: dhanushka117/user:latest
+    container_name: user
+    ports:
+      - "6001:6001"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - postgres
+
+  item:
+    image: dhanushka117/item:latest
+    container_name: item
+    ports:
+      - "6002:6002"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - postgres
+
+  delivery:
+    image: dhanushka117/delivery:latest
+    container_name: delivery
+    ports:
+      - "6003:6003"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - postgres
+
+  email:
+    image: dhanushka117/email:latest
+    container_name: email
+    ports:
+      - "7001:7001"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+
+  sms:
+    image: dhanushka117/sms:latest
+    container_name: sms
+    ports:
+      - "7002:7002"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+
+  payment:
+    image: dhanushka117/payment:latest
+    container_name: payment
+    ports:
+      - "7003:7003"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - postgres
+
+networks:
+  postgres:
+    driver: bridge
+#  mysqldb:
+#    driver: bridge
+  spring:
+    driver: bridge
+
+volumes:
+  #  data: {}
+  postgres:
+  pgadmin:
+#  my-db:

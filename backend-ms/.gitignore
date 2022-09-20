@@ -1,7 +1,6 @@
 .idea
 
 /eureka-server/target
-/api-gateway/target
 /user/target
 /item/target
 /delivery/target

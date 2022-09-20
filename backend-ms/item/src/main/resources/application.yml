@@ -7,17 +7,29 @@ spring:
     name:
       item
   datasource:
-    url: jdbc:mysql://localhost:3306/csp_item_db
-    username: root
     password: root
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:postgresql://localhost:5432/item_db
+    username: root
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/csp_item_db
+#    username: root
+#    password: root
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#  jpa:
+#    hibernate:
+#      ddl-auto: create
 
-  eureka:
-    client:
-      service-url:
-        defaultZone: http://localhost:8761/eureka
-      fetch-registry: true
-      register-with-eureka: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true

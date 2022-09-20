@@ -1,6 +1,7 @@
 package com.restapi.payment.service;
 
 import com.restapi.payment.model.Payment;
+import com.restapi.payment.payload.request.ReqEmail;
 import com.restapi.payment.payload.request.ReqPayment;
 import com.restapi.payment.payload.response.ResPayload;
 import com.restapi.payment.payload.response.ResType;
@@ -49,9 +50,18 @@ public class PaymentService {
                     reqPayment.getUserId(),
                     reqPayment.getItemId()
             );
-
             // Communicate with delivery Service and post data
             ResPayload resPayload2 = restTemplate.postForObject("http://localhost:6003/api/delivery", deliveryDetails, ResPayload.class);
+
+            // PAYMENT
+            ReqEmail email = new ReqEmail(
+                    "dhanushkasandakelum711@gmail.com",
+                    "Your payment is successful and delivery has been placed." + " Payment: " + reqPayment.getPayment(),
+                    "CSP Payment Slip",
+                    null
+            );
+            // Communicate with payment Service and post data
+            ResPayload resPayload3 = restTemplate.postForObject("http://localhost:7001/api/payment", email, ResPayload.class);
 
             return ResponseEntity.ok(new ResPayload( "Payment saved successfully", ResType.OK));
         } else {

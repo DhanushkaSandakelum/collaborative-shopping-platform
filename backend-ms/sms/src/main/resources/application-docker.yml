@@ -7,7 +7,7 @@ spring:
     name:
       sms
   datasource:
-    url: jdbc:mysql://localhost:3306/csp_sms_db
+    url: jdbc:mysql://mysql:3307/emptum_sms_db
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -18,6 +18,6 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://eureka-server:8761/eureka
     fetch-registry: true
     register-with-eureka: true

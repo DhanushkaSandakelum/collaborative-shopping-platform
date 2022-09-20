@@ -1,2 +1,0 @@
-### Test payment service
-GET http://localhost:8080/api/payment/test
