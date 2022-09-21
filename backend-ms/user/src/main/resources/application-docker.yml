@@ -7,15 +7,16 @@ spring:
     name:
       user
   datasource:
-    password: root
-    url: jdbc:postgresql://postgres:5432/user_db
+    url: jdbc:mysql://mysql:3306/user_db
     username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+        dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: true
     show-sql: true
 

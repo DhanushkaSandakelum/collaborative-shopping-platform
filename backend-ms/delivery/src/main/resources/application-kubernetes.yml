@@ -1,19 +1,19 @@
 server:
   port:
-    6002
+    6003
 
 spring:
   application:
     name:
-      item
+      delivery
   datasource:
-    url: jdbc:mysql://mysql:3306/item_db
+    url: jdbc:mysql://mysql:3306/delivery_db
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: create # when kubernetes service>replicas is more than 1, make this as update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect

@@ -1,0 +1,59 @@
+--- start minikube
+minikube start
+
+--- kubectl pod status
+kubectl get pods
+
+--- kubectl pod description
+kubectl describe pod [POD-NAME]
+
+--- kubectl apply rules
+go to kubernetes/minikube directory and type
+kubectl apply -f bootstrap/mysql
+
+--- kubectl delete pod
+kubectl delete pod [POD-NAME]
+
+-- delete entire minikube
+kubectl delete -o -all
+
+-- NOTE - What to do if pod not running ?
+First do the changes to minikube rules
+Then delete the pod forcefully using,
+    kubectl delete pod [POD-NAME] --grace-period=0 --force
+Then apply the changes rules using,
+    kubectl apply -f bootstrap/mysql
+Then check new status using,
+    kubectl get pods
+Check relevant pod logs as well using,
+    kubectl logs [POD-NAME]
+
+-- NOTE - MySql pod
+enter to mysql pod using,
+    kubectl exec -it mysql-0 -- sh
+then type and enter password using,
+    mysql -u root -p
+
+$$$ DEPLOYMENTS $$$
+--- kubectl apply rules for microservice deployments
+go to kubernetes/minikube/services directory and type
+    kubectl apply -f user
+
+--- NOTE - If pull image failes due to context exceeds what to do?
+first stop the minikube,
+    minikube stop
+
+then pull the image first using,
+    minikube image pull dhanushka117/user:latest
+
+then start minikube again,
+    minikube start
+
+clear the previous pod and let it restarts,
+    kubectl delete pod [POD-NAME] --grace-period=0 --force
+
+then check the pods using,
+    kubectl get pods
+
+also check the specific pod using,
+    kubectl describe pod [POD-NAME]

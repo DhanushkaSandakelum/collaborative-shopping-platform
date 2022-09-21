@@ -1,44 +1,47 @@
 services:
-  postgres:
-    container_name: postgres
-    image: postgres
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
-      PGDATA: /data/postgres
-    volumes:
-      - postgres:/data/postgres
-    ports:
-      - "5432:5432"
-    networks:
-      - postgres
-    restart: unless-stopped
-
-  pgadmin:
-    container_name: pgadmin
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
-    volumes:
-      - pgadmin:/var/lib/pgadmin
-    ports:
-      - "5050:80"
-    networks:
-      - postgres
-    restart: unless-stopped
-
-#  mysqldb:
-#    image: mysql:latest
-#    container_name: mysqldb
+#  postgres:
+#    container_name: postgres
+#    image: postgres
 #    environment:
-#      - MYSQL_ROOT_PASSWORD=root
-#      - MYSQL_USER=root
-#      - MYSQL_PASSWORD=root
+#      POSTGRES_USER: root
+#      POSTGRES_PASSWORD: root
+#      PGDATA: /data/postgres
+#    volumes:
+#      - postgres:/data/postgres
 #    ports:
-#      - "3307:3306"
-#    restart: always
+#      - "5432:5432"
+#    networks:
+#      - postgres
+#    restart: unless-stopped
+
+#  pgadmin:
+#    container_name: pgadmin
+#    image: dpage/pgadmin4
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+#      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+#      PGADMIN_CONFIG_SERVER_MODE: 'False'
+#    volumes:
+#      - pgadmin:/var/lib/pgadmin
+#    ports:
+#      - "5050:80"
+#    networks:
+#      - postgres
+#    restart: unless-stopped
+
+  mysql:
+    container_name: mysql
+    image: mysql:8.0
+    environment:
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - my-db:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - mysql
+    restart: unless-stopped
 
   user:
     image: dhanushka117/user:latest
@@ -49,9 +52,9 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
     networks:
       - spring
-      - postgres
+      - mysql
     depends_on:
-      - postgres
+      - mysql
 
   item:
     image: dhanushka117/item:latest
@@ -62,9 +65,9 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
     networks:
       - spring
-      - postgres
+      - mysql
     depends_on:
-      - postgres
+      - mysql
 
   delivery:
     image: dhanushka117/delivery:latest
@@ -75,9 +78,9 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
     networks:
       - spring
-      - postgres
+      - mysql
     depends_on:
-      - postgres
+      - mysql
 
   email:
     image: dhanushka117/email:latest
@@ -88,17 +91,17 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
     networks:
       - spring
-
-  sms:
-    image: dhanushka117/sms:latest
-    container_name: sms
-    ports:
-      - "7002:7002"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    networks:
-      - spring
-
+#
+#  sms:
+#    image: dhanushka117/sms:latest
+#    container_name: sms
+#    ports:
+#      - "7002:7002"
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=docker
+#    networks:
+#      - spring
+#
   payment:
     image: dhanushka117/payment:latest
     container_name: payment
@@ -108,20 +111,20 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
     networks:
       - spring
-      - postgres
+      - mysql
     depends_on:
-      - postgres
+      - mysql
 
 networks:
-  postgres:
-    driver: bridge
-#  mysqldb:
+#  postgres:
 #    driver: bridge
+  mysql:
+    driver: bridge
   spring:
     driver: bridge
 
 volumes:
   #  data: {}
-  postgres:
+#  postgres:
   pgadmin:
-#  my-db:
+  my-db:
