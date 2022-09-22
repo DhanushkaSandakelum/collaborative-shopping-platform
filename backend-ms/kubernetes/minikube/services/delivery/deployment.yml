@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: delivery
+  labels:
+    app: delivery
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: delivery
+      labels:
+        app: delivery
+    spec:
+      containers:
+        - name: user
+          image: dhanushka117/delivery:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 6003
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: kube
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: delivery

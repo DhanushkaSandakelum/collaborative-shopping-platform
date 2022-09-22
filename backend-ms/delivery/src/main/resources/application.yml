@@ -7,7 +7,7 @@ spring:
     name:
       delivery
   datasource:
-    url: jdbc:mysql://localhost:3307/delivery_db
+    url: jdbc:mysql://localhost:user/delivery_db
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver

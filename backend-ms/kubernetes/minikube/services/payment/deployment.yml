@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment
+  labels:
+    app: payment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: payment
+      labels:
+        app: payment
+    spec:
+      containers:
+        - name: payment
+          image: dhanushka117/payment:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 7003
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: kube
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: payment

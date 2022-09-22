@@ -7,7 +7,7 @@ spring:
     name:
       item
   datasource:
-    url: jdbc:mysql://localhost:3307/item_db
+    url: jdbc:mysql://localhost:user/item_db
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
