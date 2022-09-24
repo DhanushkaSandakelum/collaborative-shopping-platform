@@ -40,7 +40,7 @@ function AppNavbar(props) {
     <CNavbar colorScheme="light" className="bg-body">
       <CContainer fluid>
         <NavLink to="/" style={{ textDecoration: "none" }}>
-          <CNavbarBrand>Shopping platform</CNavbarBrand>
+          <CNavbarBrand>EMPTUM</CNavbarBrand>
         </NavLink>
         {!isUserLoggedIn ? (
           <div>

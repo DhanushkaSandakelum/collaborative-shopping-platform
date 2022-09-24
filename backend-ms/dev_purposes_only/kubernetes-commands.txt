@@ -45,6 +45,7 @@ first stop the minikube,
 
 then pull the image first using,
     minikube image pull dhanushka117/user:latest
+    minikube image load dhanushka117/user:latest
 
 then start minikube again,
     minikube start
@@ -57,3 +58,13 @@ then check the pods using,
 
 also check the specific pod using,
     kubectl describe pod [POD-NAME]
+
+
+-- NOTE - Minikube setup
+Make sure imagepullpolicy is NEVER
+Then apply image
+    kubectl apply -f item
+Then pull image
+    minikube image pull dhanushka117/item:latest
+If not started delete image and let it restart
+    kubectl delete pod item --grace-period=0 --force

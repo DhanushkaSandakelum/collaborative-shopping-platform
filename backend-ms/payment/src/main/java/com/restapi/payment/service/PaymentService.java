@@ -60,8 +60,13 @@ public class PaymentService {
                     "CSP Payment Slip",
                     null
             );
-            // Communicate with payment Service and post data
-            ResPayload resPayload3 = restTemplate.postForObject("http://localhost:7001/api/payment", email, ResPayload.class);
+            try {
+                // Communicate with payment Service and post data
+                ResPayload resPayload3 = restTemplate.postForObject("http://localhost:7001/api/email", email, ResPayload.class);
+            }
+            catch (Exception e){
+                System.out.println("Email not send");
+            }
 
             return ResponseEntity.ok(new ResPayload( "Payment saved successfully", ResType.OK));
         } else {

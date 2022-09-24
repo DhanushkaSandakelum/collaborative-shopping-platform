@@ -13,9 +13,9 @@ spec:
         app: user
     spec:
       containers:
-        - name: user
+        - name: payment
           image: dhanushka117/user:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Never
           ports:
             - containerPort: 6001
           env:

@@ -15,7 +15,7 @@ spec:
       containers:
         - name: user
           image: dhanushka117/delivery:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Never
           ports:
             - containerPort: 6003
           env:

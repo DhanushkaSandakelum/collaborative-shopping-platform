@@ -146,7 +146,7 @@ function Login() {
 									</CCol>
 									<CCol md={12}>
 										<CFormInput
-											type="text"
+											type="password"
 											id="validationServer01"
 											name="password"
 											label="Password"

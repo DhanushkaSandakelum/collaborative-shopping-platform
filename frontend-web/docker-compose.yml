@@ -1,0 +1,11 @@
+version: "3.7"
+
+services:
+  emptum:
+    image: dhanushka117/emptum:latest
+    container_name: emptum
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "1337:80"
