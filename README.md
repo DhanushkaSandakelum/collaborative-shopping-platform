@@ -18,7 +18,7 @@
 
 4. Open the frontend-web using VSCode and open the terminal and type `npm install` and wait until all files are downloaded
 
-# 3. Backend Architecture
+# Backend Architecture
 
 Backend folder structure,
 ```
@@ -36,3 +36,9 @@ Backend folder structure,
     ├── mysql.sql                   # initial mysql queries
     └── pom.xml                     # global POM configurations
 ```
+
+# High Level Architecture
+![High Level Architecture - Emptum](backend-ms/dev_purposes_only/source/e_h_l_a.jpg "High Level Architecture - Emptum")
+
+# Deployment Architecture
+![Deployment architecture - Emptum](backend-ms/dev_purposes_only/source/e_d_a.jpg "Deployment Architecture - Emptum")

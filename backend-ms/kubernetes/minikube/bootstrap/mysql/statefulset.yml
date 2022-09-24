@@ -20,7 +20,7 @@ spec:
       containers:
         - name: mysql
           image: mysql:8.0
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           volumeMounts:
             - mountPath: /var/lib/mysql
               name: mysql

@@ -56,18 +56,18 @@ services:
     depends_on:
       - mysql
 
-  item:
-    image: dhanushka117/item:latest
-    container_name: item
-    ports:
-      - "6002:6002"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    networks:
-      - spring
-      - mysql
-    depends_on:
-      - mysql
+#  item:
+#    image: dhanushka117/item:latest
+#    container_name: item
+#    ports:
+#      - "6002:6002"
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=docker
+#    networks:
+#      - spring
+#      - mysql
+#    depends_on:
+#      - mysql
 
   delivery:
     image: dhanushka117/delivery:latest
